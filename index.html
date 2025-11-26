@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Pro - Earn Money Online</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .balance {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* Landing Page */
+        .landing-page {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .landing-page h1 {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .bonus-badge {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin: 15px 0;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin: 20px 0;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-card {
+            margin-bottom: 30px;
+        }
+
+        .quiz-progress {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .quiz-progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .question {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f5ff;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #38ef7d;
+            text-align: center;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .bonus-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .bonus-item {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bonus-reward {
+            color: #38ef7d;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .phase-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .phase-item {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .phase-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .phase-item.completed {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .withdraw-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .landing-page {
+                padding: 30px 20px;
+            }
+            
+            .landing-page h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Landing Page -->
+        <div id="landingPage" class="landing-page">
+            <h1>🎯 Survey Pro</h1>
+            <p style="font-size: 20px; color: #666; margin-bottom: 20px;">Complete Surveys, Earn Real Money!</p>
+            
+            <div class="bonus-badge">
+                🎁 Get KSh 50 Registration Bonus!
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div style="font-size: 48px;">🏆</div>
+                    <h3>Multiple Phases</h3>
+                    <p>Progress through challenging quiz levels and earn rewards</p>
+                </div>
+                <div class="feature-card">
+                    <div style="font-size: 48px;">🎁</div>
+                    <h3>Bonus Rewards</h3>
+                    <p>Earn extra through videos, referrals, and streaks</p>
+                </div>
+                <div class="feature-card">
+                    <div style="font-size: 48px;">💰</div>
+                    <h3>Easy Withdrawal</h3>
+                    <p>Cash out directly to your M-PESA account</p>
+                </div>
+            </div>
+
+            <div style="max-width: 500px; margin: 0 auto;">
+                <h2 style="margin-bottom: 30px; color: #333;">Register Now - FREE!</h2>
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <input type="text" id="regName" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="regEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="regPhone" placeholder="Phone Number (07XX XXX XXX)" required>
+                    </div>
+                    <button type="submit" class="btn">Register Free & Get KSh 50</button>
+                </form>
+                <p style="color: #999; margin-top: 15px; font-size: 14px;">
+                    Survey fee of KSh 199 applies when starting quizzes
+                </p>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard">
+            <div class="header">
+                <div>
+                    <div class="logo">Survey Pro</div>
+                    <div style="margin-top: 5px; opacity: 0.9;">Welcome, <span id="userName"></span>!</div>
+                </div>
+                <div class="user-info">
+                    <div class="balance">KSh <span id="userBalance">0</span></div>
+                    <button class="btn" onclick="showWithdrawModal()" style="width: auto; margin: 0; padding: 10px 20px;">
+                        💳 Withdraw
+                    </button>
+                </div>
+            </div>
+
+            <!-- Waiting for Payment -->
+            <div id="waitingPayment" class="card" style="text-align: center;">
+                <div class="success-icon">✅</div>
+                <h2 style="color: #333; margin: 20px 0;">Registration Successful!</h2>
+                <p style="font-size: 20px; color: #38ef7d; font-weight: bold; margin: 20px 0;">
+                    You've earned KSh 50 Registration Bonus!
+                </p>
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px; border-radius: 15px; color: white; margin: 30px 0;">
+                    <h3 style="font-size: 28px; margin-bottom: 20px;">Ready to Earn More?</h3>
+                    <p style="font-size: 18px; margin-bottom: 30px;">
+                        Start surveys and earn up to KSh 595 more!
+                    </p>
+                    <div style="background: white; color: #764ba2; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                        <p>One-time Survey Access Fee</p>
+                        <p style="font-size: 48px; font-weight: bold;">KSh 199</p>
+                    </div>
+                    <button class="btn btn-success" onclick="initiatePayment()">
+                        Start Surveys Now →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Dashboard -->
+            <div id="quizDashboard" class="hidden">
+                <div class="dashboard-grid">
+                    <div>
+                        <div class="card quiz-card">
+                            <h2 style="color: #333; margin-bottom: 20px;" id="quizTitle">Quiz Phase</h2>
+                            <div class="quiz-progress">
+                                <div class="quiz-progress-bar" id="progressBar"></div>
+                            </div>
+                            <p id="progressText">Question 1 of 5</p>
+                            
+                            <div class="question" id="question"></div>
+                            <div class="options" id="options"></div>
+                        </div>
+
+                        <div class="card">
+                            <h3>Your Progress</h3>
+                            <div class="phase-list" id="phaseList"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="card">
+                            <h3>🎁 Bonus Activities</h3>
+                            <div class="bonus-list" id="bonusList"></div>
+                        </div>
+
+                        <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; text-align: center; margin-top: 20px;">
+                            <div style="font-size: 60px;">📺</div>
+                            <h3>Sponsored Video</h3>
+                            <p style="margin: 15px 0;">Watch and earn KSh 20</p>
+                            <button class="btn" style="background: white; color: #f5576c;" onclick="claimBonus(0)">
+                                Watch Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div id="paymentInitial">
+                <h2 style="text-align: center; color: #333; margin-bottom: 20px;">M-PESA Payment</h2>
+                <div style="background: #e8f5e9; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px;">
+                    <p style="color: #666;">Survey Access Fee</p>
+                    <p style="font-size: 48px; font-weight: bold; color: #38ef7d;">KSh 199</p>
+                </div>
+                <p style="text-align: center; color: #666; margin-bottom: 20px;">
+                    Enter your M-PESA phone number. You will receive a payment prompt on your phone.
+                </p>
+                <div id="paymentError" class="error-message hidden"></div>
+                <div class="form-group">
+                    <input type="tel" id="mpesaPhone" placeholder="Your M-PESA Number (07XX XXX XXX)">
+                </div>
+                <button class="btn btn-success" onclick="processPayment()">Pay KSh 199 via M-PESA</button>
+                <button class="btn" onclick="closePaymentModal()">Cancel</button>
+            </div>
+
+            <div id="paymentProcessing" class="hidden">
+                <div class="spinner"></div>
+                <h3 style="text-align: center; margin: 20px 0;">Initiating Payment...</h3>
+                <p style="text-align: center; color: #666;">Connecting to M-PESA...</p>
+            </div>
+
+            <div id="paymentAwaiting" class="hidden">
+                <div style="font-size: 80px; text-align: center;">📱</div>
+                <h3 style="text-align: center; color: #38ef7d; margin: 20px 0;">Check Your Phone!</h3>
+                <p style="text-align: center; font-size: 18px; margin: 15px 0;">
+                    M-PESA prompt sent to <strong><span id="paymentPhone"></span></strong>
+                </p>
+                <p style="text-align: center; color: #666;">
+                    Enter your M-PESA PIN on your phone to complete payment
+                </p>
+                <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center;">
+                    <p style="color: #ff6f00;">⏰ The prompt will expire in 60 seconds</p>
+                </div>
+            </div>
+
+            <div id="paymentSuccess" class="hidden">
+                <div class="success-icon">✅</div>
+                <h3 style="text-align: center; color: #38ef7d; margin: 20px 0;">Payment Successful!</h3>
+                <p style="text-align: center; color: #666;">
+                    You will receive an M-PESA confirmation message
+                </p>
+                <p style="text-align: center; color: #999; margin-top: 15px;">
+                    Redirecting to surveys...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <h2 style="text-align: center; color: #333; margin-bottom: 20px;">Withdraw Funds</h2>
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; color: white;">
+                <p>Available Balance</p>
+                <p style="font-size: 48px; font-weight: bold;">KSh <span id="withdrawBalance">0</span></p>
+                <p style="font-size: 14px; margin-top: 10px; opacity: 0.9;">Minimum: KSh 500</p>
+            </div>
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 10px; font-weight: bold;">M-PESA Number</label>
+                <input type="tel" id="withdrawPhone" placeholder="07XX XXX XXX">
+            </div>
+            <div class="form-group">
+                <label style="display: block; margin-bottom: 10px; font-weight: bold;">Amount (KSh)</label>
+                <input type="number" id="withdrawAmount" placeholder="Min 500" min="500">
+            </div>
+            <button class="btn btn-success" onclick="processWithdrawal()">Withdraw to M-PESA</button>
+            <button class="btn" onclick="closeWithdrawModal()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const BACKEND_URL = 'https://authentic-laughter-production-680f.up.railway.app';
+        const REGISTRATION_BONUS = 50;
+        const MIN_WITHDRAWAL = 500;
+
+        // State
+        let user = null;
+        let earnings = 0;
+        let currentPhase = 0;
+        let currentQuestion = 0;
+        let answers = {};
+        let checkoutRequestId = null;
+        let paymentPolling = null;
+
+        // Quiz Data
+        const phases = [
+            {
+                name: "General Knowledge Quiz",
+                reward: 50,
+                questions: [
+                    { q: "What is the capital of Kenya?", options: ["Nairobi", "Mombasa", "Kisumu", "Nakuru"], correct: 0 },
+                    { q: "Which year did Kenya gain independence?", options: ["1960", "1963", "1965", "1970"], correct: 1 },
+                    { q: "What is the largest ocean?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correct: 3 },
+                    { q: "Who invented the telephone?", options: ["Edison", "Bell", "Tesla", "Marconi"], correct: 1 },
+                    { q: "What is 15 × 8?", options: ["110", "120", "130", "140"], correct: 1 }
+                ]
+            },
+            {
+                name: "Technology & Innovation",
+                reward: 75,
+                questions: [
+                    { q: "What does AI stand for?", options: ["Automated Intelligence", "Artificial Intelligence", "Advanced Interface", "Automatic Integration"], correct: 1 },
+                    { q: "Who founded Microsoft?", options: ["Steve Jobs", "Bill Gates", "Mark Zuckerberg", "Elon Musk"], correct: 1 },
+                    { q: "What year was the first iPhone released?", options: ["2005", "2007", "2009", "2010"], correct: 1 },
+                    { q: "What is the main programming language for Android?", options: ["Swift", "Python", "Java", "C++"], correct: 2 },
+                    { q: "What does HTTP stand for?", options: ["HyperText Transfer Protocol", "High Transfer Text Protocol", "Home Tool Transfer Protocol", "Hyperlink Text Protocol"], correct: 0 }
+                ]
+            },
+            {
+                name: "Business & Finance",
+                reward: 100,
+                questions: [
+                    { q: "What is GDP?", options: ["Gross Domestic Product", "General Development Plan", "Global Distribution Point", "Government Development Policy"], correct: 0 },
+                    { q: "What is the currency of Japan?", options: ["Yuan", "Won", "Yen", "Ringgit"], correct: 2 },
+                    { q: "Who is known as the 'Oracle of Omaha'?", options: ["Bill Gates", "Warren Buffett", "Jeff Bezos", "Elon Musk"], correct: 1 },
+                    { q: "What does CEO stand for?", options: ["Chief Executive Officer", "Central Executive Officer", "Corporate Executive Officer", "Chief Economic Officer"], correct: 0 },
+                    { q: "What is inflation?", options: ["Decrease in prices", "Increase in prices", "Stable prices", "Foreign exchange rate"], correct: 1 }
+                ]
+            }
+        ];
+
+        const bonuses = [
+            { name: "Watch Sponsored Video", reward: 20, completed: false },
+            { name: "Refer a Friend", reward: 50, completed: false },
+            { name: "Daily Login Streak (7 days)", reward: 100, completed: false },
+            { name: "Complete All Phases", reward: 200, completed: false }
+        ];
+
+        // Registration
+        document.getElementById('registrationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regPhone').value;
+
+            user = { name, email, phone, paid: false };
+            earnings = REGISTRATION_BONUS;
+
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('dashboard').classList.add('active');
+            document.getElementById('userName').textContent = name;
+            document.getElementById('userBalance').textContent = earnings;
+        });
+
+        // Payment
+        function initiatePayment() {
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            showPaymentSection('paymentInitial');
+        }
+
+        function showPaymentSection(section) {
+            ['paymentInitial', 'paymentProcessing', 'paymentAwaiting', 'paymentSuccess'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(section).classList.remove('hidden');
+        }
+
+        async function processPayment() {
+            const phone = document.getElementById('mpesaPhone').value;
+            if (!phone) {
+                document.getElementById('paymentError').textContent = 'Please enter your phone number';
+                document.getElementById('paymentError').classList.remove('hidden');
+                return;
+            }
+
+            showPaymentSection('paymentProcessing');
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/mpesa/stkpush`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phoneNumber: phone, amount: 199 })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    checkoutRequestId = data.checkoutRequestId;
+                    document.getElementById('paymentPhone').textContent = phone;
+                    showPaymentSection('paymentAwaiting');
+                    
+                    // Poll for payment status
+                    startPaymentPolling();
+                } else {
+                    showPaymentSection('paymentInitial');
+                    document.getElementById('paymentError').textContent = data.message || 'Payment failed. Please try again.';
+                    document.getElementById('paymentError').classList.remove('hidden');
+                }
+            } catch (error) {
+                showPaymentSection('paymentInitial');
+                document.getElementById('paymentError').textContent = 'Connection error. Please check if backend server is running.';
+                document.getElementById('paymentError').classList.remove('hidden');
+            }
+        }
+
+        function startPaymentPolling() {
+            let attempts = 0;
+            const maxAttempts = 40; // 2 minutes (40 * 3 seconds)
+
+            paymentPolling = setInterval(async () => {
+                attempts++;
+
+                try {
+                    const response = await fetch(`${BACKEND_URL}/api/mpesa/status`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ checkoutRequestId })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.status === 'success') {
+                        clearInterval(paymentPolling);
+                        showPaymentSection('paymentSuccess');
+                        
+                        setTimeout(() => {
+                            closePaymentModal();
+                            user.paid = true;
+                            document.getElementById('waitingPayment').classList.add('hidden');
+                            document.getElementById('quizDashboard').classList.remove('hidden');
+                            loadQuiz();
+                            renderPhases();
+                            renderBonuses();
+                        }, 2000);
+                    } else if (data.status === 'failed' || attempts >= maxAttempts) {
+                        clearInterval(paymentPolling);
+                        showPaymentSection('paymentInitial');
+                        document.getElementById('paymentError').textContent = data.resultDesc || 'Payment timeout. Please try again.';
+                        document.getElementById('paymentError').classList.remove('hidden');
+                    }
+                } catch (error) {
+                    if (attempts >= maxAttempts) {
+                        clearInterval(paymentPolling);
+                        showPaymentSection('paymentInitial');
+                        document.getElementById('paymentError').textContent = 'Connection error. Please try again.';
+                        document.getElementById('paymentError').classList.remove('hidden');
+                    }
+                }
+            }, 3000);
+        }
+
+        // Quiz Functions
+        function loadQuiz() {
+            const phase = phases[currentPhase];
+            const question = phase.questions[currentQuestion];
+
+            document.getElementById('quizTitle').textContent = phase.name;
+            document.getElementById('progressText').textContent = `Question ${currentQuestion + 1} of ${phase.questions.length}`;
+            document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / phase.questions.length) * 100}%`;
+            document.getElementById('question').textContent = question.q;
+
+            const optionsHtml = question.options.map((opt, idx) => 
+                `<div class="option" onclick="answerQuestion(${idx})">${String.fromCharCode(65 + idx)}. ${opt}</div>`
+            ).join('');
+            document.getElementById('options').innerHTML = optionsHtml;
+        }
+
+        function answerQuestion(answerIdx) {
+            const phase = phases[currentPhase];
+            const question = phase.questions[currentQuestion];
+            const isCorrect = answerIdx === question.correct;
+
+            answers[`${currentPhase}-${currentQuestion}`] = isCorrect;
+
+            if (currentQuestion < phase.questions.length - 1) {
+                currentQuestion++;
+                loadQuiz();
+            } else {
+                completePhase();
+            }
+        }
+
+        function completePhase() {
+            const phase = phases[currentPhase];
+            const correctCount = Object.keys(answers).filter(key => 
+                key.startsWith(`${currentPhase}-`) && answers[key]
+            ).length;
+
+            const phaseEarnings = Math.floor((correctCount / phase.questions.length) * phase.reward);
+            earnings += phaseEarnings;
+            document.getElementById('userBalance').textContent = earnings;
+
+            alert(`Phase ${currentPhase + 1} Complete! You earned KSh ${phaseEarnings}`);
+
+            if (currentPhase < phases.length - 1) {
+                currentPhase++;
+                currentQuestion = 0;
+                loadQuiz();
+                renderPhases();
+            } else {
+                alert(`All Phases Complete! Total Earnings: KSh ${earnings}`);
+                bonuses[3].completed = true;
+                earnings += 200;
+                document.getElementById('userBalance').textContent = earnings;
+                renderBonuses();
+            }
+        }
+
+        function renderPhases() {
+            const html = phases.map((phase, idx) => {
+                let className = 'phase-item';
+                let icon = '🔒';
+                
+                if (idx < currentPhase) {
+                    className += ' completed';
+                    icon = '✅';
+                } else if (idx === currentPhase) {
+                    className += ' active';
+                    icon = '⚡';
+                }
+                
+                return `
+                    <div class="${className}">
+                        <div>
+                            <span style="font-size: 24px; margin-right: 10px;">${icon}</span>
+                            <strong>${phase.name}</strong>
+                        </div>
+                        <div class="bonus-reward">+KSh ${phase.reward}</div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('phaseList').innerHTML = html;
+        }
+
+        function renderBonuses() {
+            const html = bonuses.map((bonus, idx) => `
+                <div class="bonus-item">
+                    <div>
+                        <strong>${bonus.name}</strong>
+                        <div class="bonus-reward">+KSh ${bonus.reward}</div>
+                    </div>
+                    <button class="btn ${bonus.completed ? '' : 'btn-success'}" 
+                            onclick="claimBonus(${idx})" 
+                            ${bonus.completed ? 'disabled' : ''}
+                            style="width: auto; padding: 10px 20px; margin: 0;">
+                        ${bonus.completed ? '✓ Claimed' : 'Claim'}
+                    </button>
+                </div>
+            `).join('');
+            document.getElementById('bonusList').innerHTML = html;
+        }
+
+        function claimBonus(idx) {
+            if (!bonuses[idx].completed) {
+                bonuses[idx].completed = true;
+                earnings += bonuses[idx].reward;
+                document.getElementById('userBalance').textContent = earnings;
+                alert(`Bonus Claimed! +KSh ${bonuses[idx].reward}`);
+                renderBonuses();
+            }
+        }
+
+        // Withdrawal
+        function showWithdrawModal() {
+            if (earnings < MIN_WITHDRAWAL) {
+                alert(`Minimum withdrawal amount is KSh ${MIN_WITHDRAWAL}`);
+                return;
+            }
+            document.getElementById('withdrawBalance').textContent = earnings;
+            document.getElementById('withdrawModal').classList.add('active');
+        }
+
+        function closeWithdrawModal() {
+            document.getElementById('withdrawModal').classList.remove('active');
+        }
+
+        function processWithdrawal() {
+            const phone = document.getElementById('withdrawPhone').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+
+            if (!phone || !amount) {
+                alert('Please enter phone number and amount');
+                return;
+            }
+
+            if (amount < MIN_WITHDRAWAL) {
+                alert(`Minimum withdrawal is KSh ${MIN_WITHDRAWAL}`);
+                return;
+            }
+
+            if (amount > earnings) {
+                alert('Insufficient balance');
+                return;
+            }
+
+            earnings -= amount;
+            document.getElementById('userBalance').textContent = earnings;
+            alert(`Withdrawal of KSh ${amount} to ${phone} is being processed. You will receive M-PESA confirmation shortly.`);
+            closeWithdrawModal();
+            
+            document.getElementById('withdrawPhone').value = '';
+            document.getElementById('withdrawAmount').value = '';
+        }
+    </script>
+</body>
+</html>
